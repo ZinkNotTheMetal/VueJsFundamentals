@@ -271,6 +271,83 @@ Template
 </div>
 ```
 
+## Component Communication (Presentation)
+* Components may include other components in their templates
+* We declare them in the parent component
+
+| Props | Emitting Events |
+|:----- | :---------------|
+| Pass values from parent to child | Emit events from child to parent |
+
+`<Hero :hero="myHero"></Hero>`
+```javascript
+props: {
+    hero: { ... },
+}
+```
+
+`<Hero :hero="myHero" @save="save"></Hero>`
+```javascript
+// child component
+methods: {
+    saveHero() {
+        this.$emit('save', this.theHero);
+    }
+}
+```
+
+### Prop Tips
+* Casing - camelCased prop names use kebab-cased equivalents in templates
+* Prop Types - String, Number, Boolean, Array, Object, Function, Promise
+* Dynamic vs Static - Dynamic: `:title="hero.name"` Static: `title="Mrs Awesome"`
+
+## Custom Events
+* Emit events from child components to parent component
+* We can pass values
+```javascript
+//Child (hero-detail.vue)
+methods: {
+    saveHero() {
+        this.$emit('save', this.theHero);
+    }
+}
+```
+```html
+<!-- Parent (Heros.vue) -->
+<HeroDetail
+   v-if="selected" 
+   :hero="selectedHero"
+   @save="saveIt"></HeroDetail>
+```
+
+### Custom Event Tips
+* Casing - Casing must match from where it is emitted to the parent component's template where it is used
+* Emitting Values - **$.emit**
+
+## Accessing Data (HTTP)
+We use **[axios](https://github.com/axios)**, a Promise based HTTP client for the browser and node.js, to get and save data from web APIs
+```javascript
+import axios from 'axios';
+//...
+created() {
+    axios
+        .get(`${API}/heros`)
+        .then(response => {
+            //handle the response if you want
+        });
+}
+```
+
+## View Router Features
+* Nested route/view mapping
+* Modular, component-based router configuration
+* Route params, query, wildcards
+* View transition effects powered by Vue.js' transition system
+* Links with automatic active CSS classes
+* HTML5 history mode or hash mode, with auto-fallback in IE9
+
+
+
 # Resources
 
 ### John Papa
