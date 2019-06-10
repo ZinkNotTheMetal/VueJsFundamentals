@@ -181,6 +181,95 @@ Does not have to do as much DOM manipulation, just uses hidden and classes in th
 ```html
 <div v-show="selectedHero">You selected a hero</div>
 ```
+## Interacting with a Component
+### The data() function
+* Models for the component
+* Defines an object for the model
+* Vue creates getters/setters for each property
+* Recommended
+  * A function that returns the initial data object
+  * New component instances won't share state
+
+
+### [Lifecycle Hooks](https://vuejs.org/v2/api/#Options-Lifecycle-Hooks)
+* beforeCreate -> before the element has even been created (not many people use this)
+* created -> not on the DOM yet (good time to get Data kick off async calls)
+* beforeMounted
+* mounted -> another time to get data (DOM is available - good for 3rd party libraries)
+* beforeUpdate
+* updated -> similar to onChanges
+* beforeDestroy
+* destroyed
+
+Read the Vue docs for more information
+
+## [Computed Properties](https://vuejs.org/v2/guide/computed.html#Computed-Properties)
+* Fire when any dependency value changes
+* Cached based on its **reactive dependencies**
+* Will only re-evaluate when some of its reactive dependencies have changed
+
+```javascript
+computed: {
+    fullName() {
+        return `${this.selectedHero.firstName} ${this.selectedHero.lastName}`;
+    },
+    reversedName() {
+        return (this.name = [...this.name].reverse().join(''));
+    }
+}
+```
+
+### [Computed get/set](https://vuejs.org/v2/guide/computed.html#Computed-Setter)
+Computed properties support getter and setter functions
+```javascript
+computed: {
+    fullName: {
+        get() {
+            let value = this.first;
+            value += this.last ? ` ${this.last}` : ""
+            return value;
+        },
+        set(value) {
+            var names = value.split(" ");
+            this.first = names[0];
+            this.last = names.length === 1 ? "" : names[names.length - 1];
+        }
+    }
+}
+```
+
+### [Watchers](https://vuejs.org/v2/guide/computed.html#Watchers)
+* React to data changes
+* Named same as reactive value
+* Accepts new and old values
+* Ideal for asynchronous operations
+
+```javascript
+watch: {
+    hero(newHero, oldHero) {
+        console.log(newHero.name);
+        console.log(oldHero.name);
+    }
+}
+```
+
+### Filters
+Usable with {{ }} interpolations and v-bind expressions
+```javascript
+filters: {
+    capitalize(value) {
+        if(!val) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+}
+```
+Template
+```html
+<div>
+    Hello {{ name | capitalize }}
+</div>
+```
 
 # Resources
 
