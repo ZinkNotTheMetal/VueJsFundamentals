@@ -68,15 +68,15 @@ Runs an interactive User Interface for your Vue application
 
 ## Vue Syntax
 ### Global Registration (DO NOT USE)
-// Global Registration
 ```javascript
-Vue.component('component-a', { ... })
-Vue.component('component-b', { ... })
-Vue.component('component-c', { ... })
+// Global Registration
+Vue.component('component-a', { /* ... */ })
+Vue.component('component-b', { /* ... */ })
+Vue.component('component-c', { /* ... */ })
 ```
 
-// Local registration
 ```javascript
+// Local registration
 var ComponentA = { /* ... */ }
 var ComponentB = { /* ... */ }
 var ComponentC = { /* ... */ }
@@ -93,6 +93,94 @@ export default {
 }
 ```
 
+## Displaying Data and Binding
+| Syntax | Description |
+|:-------|:----------- |
+| `{{ propertyName }}` | Bind to and display property value |
+| `{{ 2 + 2 }`} | Template Expression (BE CAREFUL to use, prefer computed property) |
+| `v-bind:href="model"` | Property Binding (href) - defined in data() |
+| `v-on:click="statement"` | Event binding |
+| `v-model="model"` | Two-way binding |
+| `v-once` | Display a value once, but not see any updates (mainly used for efficiency) 
+
+Property Binding - (:) to get rid of binding 
+```html
+<a :href="url"></a>
+.special { font-weight:bold; }
+<span :class="{special: name === 'John'"></span>
+```
+
+## Event Bindings (DOM bindings)
+Event bindings execute an expression when an event occurs
+v-on:event="expression" but shortcut is @event="expression"
+```html
+<button @click="reset()">Reset</button>
+
+<script>
+export default {
+    data() { ... },
+    methods: {
+        reset() {
+            this.name = "Madelyn";
+        }
+    }
+}
+</script>
+```
+
+## Display a List
+Iterate over a list of items in a model. Identify a unique key, for faster rending
+```html
+<ul>
+    <!-- :key helps Vue with modifications on the unique identifier on the row (optional) -->
+    <li v-for="hero in heros" :key="hero.id">
+        {{ hero.name }}
+    </li>
+</ul>
+```
+
+## Conditionals
+Display content based on an expression (add/remove from the DOM)
+```html
+<div v-if="selectedHero">
+    You selected {{ selectedHero.name }}
+</div>
+```
+
+## Combined Lists and Conditionals
+```html
+<ul>
+    <li
+        v-for="hero in heros"
+        :key="hero.id"
+        @click="selectedHero=hero"
+        :class="{highlight: selectedHero === hero}">
+    {{ hero.name }}
+    </li>
+</ul>
+<div v-if="selectedHero">
+    You selected a hero who is {{ selectedHero.name }}
+</div>
+<script>
+    ...
+    data() {
+        return {
+            selectedHero: undefined,
+            heros: [
+                { id: 10, name: 'Ella' },
+                { id: 20, name: 'Madelyn' },
+                { id: 30, name: 'Haley' }
+            ]
+        }
+    }
+<script>
+```
+
+## What about only visibility
+Does not have to do as much DOM manipulation, just uses hidden and classes in the background
+```html
+<div v-show="selectedHero">You selected a hero</div>
+```
 
 # Resources
 
