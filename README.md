@@ -29,13 +29,13 @@ A Vue Component can contain HTML, Styles, & Code (borrows principles from React 
 
 Each component serves a single purpose on the page (Single Responsibility Principle in SOLID)
 
-## Simplest Vue Application (01-First Vue App)
+## [Simplest Vue Application](https://github.com/ZinkNotTheMetal/VueJsFundamentals/tree/master/01-First%20Vue%20App)
 1. Get Vue from a CDN
 2. Create some HTML
 3. Create a Vue instance
 4. Bind a model from the Vue instance to the HTML
 
-## Vue CLI (02-Introduction to VueCLI)
+## [Introduction to the Vue CLI](https://github.com/ZinkNotTheMetal/VueJsFundamentals/tree/master/02-Introduction%20to%20VueCLI/hello-world)
 ```command line
 vue create hue-vue -d
 ```
